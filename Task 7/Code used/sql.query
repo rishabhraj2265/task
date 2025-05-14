@@ -1,0 +1,17 @@
+SELECT 
+    LEAST(a.item_id, b.item_id) AS item_x,
+    GREATEST(a.item_id, b.item_id) AS item_y,
+    COUNT(DISTINCT a.user_id) AS users_who_bought_both
+FROM 
+    purchases a
+JOIN 
+    purchases b 
+    ON a.user_id = b.user_id 
+    AND a.item_id <> b.item_id
+GROUP BY 
+    LEAST(a.item_id, b.item_id), 
+    GREATEST(a.item_id, b.item_id)
+ORDER BY 
+    users_who_bought_both DESC
+LIMIT 20;
+
